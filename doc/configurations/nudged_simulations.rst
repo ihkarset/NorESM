@@ -29,7 +29,7 @@ Modify user_nl_cam include information about the meteorology you want to nudge t
 
 ::
 
-met_filenames_list points to a txt-file that must include all the meteorological nudging data that will be used for the entire simulation. The met_data_file points to the file in this list that includes the starting date of your simulation. The example above shows how to point to ERA-Interim data, created by Inger Helene Hafsahl Karset (https://www.duo.uio.no/handle/ 10852/72779). You can also create your own model produced data (explanation further down in this document). 
+met_filenames_list points to a txt-file that must include all the meteorological nudging data that will be used for the entire simulation. The met_data_file points to the file in this list that includes the starting date of your simulation. The example above shows how to point to ERA-Interim data, created by Inger Helene Hafsahl Karset (https://www.duo.uio.no/handle/10852/72779). You can also create your own model produced data (explanation further down in this document). 
 
 3. Nudging strength
 -------------------
@@ -74,8 +74,12 @@ This is recommended when looking at aerosol-cloud interactions, especially when 
 
 Modify user_nl_cam to point to an appropriate topography file if nudging to meteorology 
 from ERA-Interim or other meteorology that is not produced by the model itself. It is the field named ‘PHIS’ in the topography file that need to correspond to the source of the nudging data. 
+
+::
+
 &cam_inparm bnd_topo = '/cluster/shared/noresm/inputdata/noresm-only/inputForNudging/ERA_f09f09_32L_days/ ERA_bnd_topo_noresm2_20191023.nc' 
 
+::
 
 
 7. Correct calender
@@ -127,11 +131,16 @@ files with instantaneous values of PS, U, V and T every six hours, four pr file.
 
 Move the nudging data (the h1-files) over to a preferred folder and create a txt-file including
 a list of all the nudging data files that later can be pointed to as met_filenames_list:
-ls -d -1 $PWD/*.h1.*.nc > fileList.txt
+
+::
+
+ls -d -1 $PWD/\*.h1.\*.nc > fileList.txt
+
+::
 
 For more information, look into the file where most of the nudging code is found::
 
-  /components/cam/src/NorESM/fv/metdata.F90. 
+  /components/cam/src/NorESM/fv/metdata.F90
   
 There are also other options for namelist modifications regarding nudging:
 http://www.cesm.ucar.edu/models/cesm2/settings/current/cam_nml.html and search for “met_”
